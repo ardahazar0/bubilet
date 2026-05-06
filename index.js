@@ -13,7 +13,7 @@ if (!TELEGRAM_TOKEN || !CHAT_ID) {
 
 // GitHub Actions üzerinde sürekli açık kalmasına ("polling") gerek yok
 const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: false });
-const TARGET_URL = "https://www.bubilet.com.tr/sanatci/sebnem-ferah";
+const TARGET_URL = "https://www.bubilet.com.tr/sanatci/mabel-matiz";
 
 async function checkTicket() {
   console.log(`[${new Date().toISOString()}] Bilet kontrolü yapılıyor...`);
@@ -25,12 +25,12 @@ async function checkTicket() {
     });
     const page = await context.newPage();
     
-    await page.goto(TARGET_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await page.goto(TARGET_URL, { waitUntil: 'networkidle', timeout: 30000 });
     
     const content = await page.content();
     
-    // Sayfanın JSON verilerinden etkinlik sayısını bulan regex
-    const eventCountMatch = content.match(/"eventCount":(\d+)/);
+    // Sayfadaki etkinlik sayısını HTML içinden bulan regex
+    const eventCountMatch = content.match(/>(\d+)<\/span>[^<]*<span>Etkinlik<\/span>/i) || content.match(/(\d+)\s*Etkinlik/i);
     let eventCount = 0;
     if (eventCountMatch && eventCountMatch[1]) {
       eventCount = parseInt(eventCountMatch[1], 10);
@@ -40,7 +40,7 @@ async function checkTicket() {
 
     if (hasTickets) {
       console.log("Bilet bulundu! Mesaj gönderiliyor...");
-      await bot.sendMessage(CHAT_ID, `🚨 ŞEBNEM FERAH BİLETİ SATIŞTA OLABİLİR!\nHemen kontrol et: ${TARGET_URL}`);
+      await bot.sendMessage(CHAT_ID, `🚨 MABEL MATİZ BİLETİ SATIŞTA OLABİLİR!\nHemen kontrol et: ${TARGET_URL}`);
     } else {
       console.log("Henüz bilet yok.");
     }
