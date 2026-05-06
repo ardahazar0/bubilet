@@ -1,0 +1,31 @@
+name: Bubilet Bilet Kontrol
+
+on:
+  schedule:
+    # Her 5 dakikada bir çalışır (GitHub Actions minimum süresidir)
+    - cron: '*/5 * * * *'
+  workflow_dispatch: # Butonla manuel çalıştırmak için
+
+jobs:
+  check-tickets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repodan Kodu Al
+        uses: actions/checkout@v3
+
+      - name: Node.js Kurulumu
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Kütüphaneleri Yükle
+        run: |
+          npm install
+          npx playwright install chromium --with-deps
+
+      - name: Scripti Çalıştır
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+        run: node index.js
