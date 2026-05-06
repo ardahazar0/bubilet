@@ -17,11 +17,6 @@ const TARGET_URL = "https://www.bubilet.com.tr/sanatci/sebnem-ferah";
 
 async function checkTicket() {
   console.log(`[${new Date().toISOString()}] Bilet kontrolü yapılıyor...`);
-  
-  // --- GEÇİCİ TEST MESAJI ---
-  await bot.sendMessage(CHAT_ID, "🛠️ [TEST] GitHub Actions bot başarıyla tetiklendi ve çalışıyor!");
-  // --------------------------
-
   let browser;
   try {
     browser = await chromium.launch({ headless: true });

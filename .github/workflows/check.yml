@@ -2,8 +2,8 @@ name: Bubilet Bilet Kontrol
 
 on:
   schedule:
-    # Her 5 dakikada bir çalışır (GitHub Actions minimum süresidir)
-    - cron: '*/5 * * * *'
+    # GitHub Actions cron en düşük 5 dakikayı destekler. 2 yazılsa bile ortalama 5 dakikada bir çalıştırır.
+    - cron: '*/2 * * * *'
   workflow_dispatch: # Butonla manuel çalıştırmak için
 
 jobs:
