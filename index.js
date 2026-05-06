@@ -13,7 +13,7 @@ if (!TELEGRAM_TOKEN || !CHAT_ID) {
 
 // GitHub Actions üzerinde sürekli açık kalmasına ("polling") gerek yok
 const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: false });
-const TARGET_URL = "https://www.bubilet.com.tr/sanatci/mabel-matiz";
+const TARGET_URL = "https://www.bubilet.com.tr/sanatci/sebnem-ferah";
 
 async function checkTicket() {
   console.log(`[${new Date().toISOString()}] Bilet kontrolü yapılıyor...`);
@@ -40,7 +40,7 @@ async function checkTicket() {
 
     if (hasTickets) {
       console.log("Bilet bulundu! Mesaj gönderiliyor...");
-      await bot.sendMessage(CHAT_ID, `🚨 MABEL MATİZ BİLETİ SATIŞTA OLABİLİR!\nHemen kontrol et: ${TARGET_URL}`);
+      await bot.sendMessage(CHAT_ID, `🚨 ŞEBNEM FERAH BİLETİ SATIŞTA OLABİLİR!\nHemen kontrol et: ${TARGET_URL}`);
     } else {
       console.log("Henüz bilet yok.");
     }
